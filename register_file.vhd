@@ -4,8 +4,10 @@ use ieee.std_logic_1164.all;
 USE work.components.all;
 
 entity register_file is
-	port(clock, reset, reg_write : in std_logic;
-			read_port1, read_port2, write_port, write_value : in std_logic_vector(3 downto 0);
+	port(clock, reset, ins_reg_write : in std_logic;
+			read_port1, read_port2, ins_write_port, ins_write_value : in std_logic_vector(3 downto 0);
+			usr_reg_write : in std_logic;
+			usr_write_value, usr_write_port : in std_logic_vector(3 downto 0);
 			value1, value2 : out std_logic_vector(3 downto 0));
 end register_file;
 
@@ -19,6 +21,10 @@ architecture struc_behaviour of register_file is
 	
 	signal decoder_port1, decoder_port2, decoder_write_enable : std_logic_vector(15 downto 0);
 	
+	------- signals for final register operations -------------
+	signal reg_write : std_logic;
+	signal write_port, write_value : std_logic_vector(3 downto 0);
+	
 	------- signals for register output -----------------------
 	signal rout0, rout1, rout2, rout3, rout4, rout5, rout6, rout7, rout8, rout9, rout10, rout11, rout12, rout13, rout14, rout15 : std_logic_vector(3 downto 0);
 	------- signals for multiplexer output ---------------------
@@ -30,6 +36,16 @@ begin
 	stage_dec1 : dec4to16 port map (read_port1, '1', decoder_port1);
 	stage_dec2 : dec4to16 port map (read_port2, '1', decoder_port2);
 
+	------------ mux to decide between user vs instruction port -------------
+	stage_mux1 : mux2to1 generic map (n=>4) port map (usr_reg_write, ins_write_port, usr_write_port, write_port);
+	
+	------------ mux to decide between user vs instruction value ------------
+	stage_mux2 : mux2to1 generic map (n=>4) port map (usr_reg_write, ins_write_value, usr_write_value, write_value);
+	
+	------------ mux to decide between user vs instruction register enable ------------
+	-- stage_mux3 : mux2to1 generic map (n=>4) port map (usr_reg_write, ins_reg_write, usr_reg_write, reg_write);
+	reg_write <= usr_reg_write or ins_reg_write;
+	
 	------------ decoder 4 x 16 to find which register to write to -------------
 	stage_dec_write : dec4to16 port map (write_port, reg_write, decoder_write_enable);
 	

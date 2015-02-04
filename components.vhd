@@ -70,8 +70,10 @@ end component;
 
 --------------- register file -------------------------------
 component register_file is
-	port(clock, reset, reg_write : in std_logic;
-			read_port1, read_port2, write_port, write_value : in std_logic_vector(3 downto 0);
+	port(clock, reset, ins_reg_write : in std_logic;
+			read_port1, read_port2, ins_write_port, ins_write_value : in std_logic_vector(3 downto 0);
+			usr_reg_write : in std_logic;
+			usr_write_value, usr_write_port : in std_logic_vector(3 downto 0);
 			value1, value2 : out std_logic_vector(3 downto 0));
 end component;
 

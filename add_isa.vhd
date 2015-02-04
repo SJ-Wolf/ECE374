@@ -3,7 +3,8 @@ use ieee.std_logic_1164.all;
 use work.components.all;
 
 entity add_isa is
-	port( clock, reset : in std_logic;
+	port( clock, reset, user_reg_enable : in std_logic;
+	user_reg_loc, user_reg_value : in std_logic_vector(3 downto 0);
 	result : out std_logic_vector(3 downto 0));
 end add_isa;
 
@@ -16,6 +17,7 @@ architecture behaviour of add_isa is
 begin
 	m1 : mux2to1 generic map (n=>4) port map (reset, update_pc, initial_pc, mout);					--- multiplexer
 	r1	: regN generic map (n=>4) port map (clock, mout, rout);												--- register
+	
 	---------- pc = pc +1 ------------------------------------------
 	addpc : ripple_carry port map ('0', rout, "0001", update_pc);
 
@@ -26,7 +28,7 @@ begin
 	id : instruction_decode port map (instr_from_im, m_read, m_write, reg_write, add_sub, read_port1, read_port2, write_port);
 	
 	------------- RF --------------------------------------------------
-	rf : register_file port map (clock, reset, reg_write, read_port1, read_port2, write_port, sum, src1, src2);
+	rf : register_file port map (clock, reset, reg_write, read_port1, read_port2, write_port, sum, user_reg_enable, user_reg_value, user_reg_loc, src1, src2);
 	
 	add_ins : ripple_carry port map (add_sub, src1, src2, sum);
 	
