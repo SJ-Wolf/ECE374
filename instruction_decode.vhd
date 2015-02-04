@@ -25,10 +25,11 @@ begin
 	
 	m_read <= '0';
 	m_write <= '0';
-	reg_write <= '1' when (opcode = "000000")
-							else '0';
+	reg_write <= '1' when ((opcode = "000000") and ((funct = "100000") 
+			or (funct = "100010"))) 
+			else '0';
 	
-	add_sub <= '0' when (funct = "100000") 
-						else 'Z';
+	add_sub <= '1' when ((opcode = "000000") and (funct = "100010"))
+							else '0';
 
 end struc_behaviour;
