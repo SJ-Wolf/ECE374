@@ -14,18 +14,18 @@ end instruction_memory;
 architecture struc_behaviour of instruction_memory is
 	constant NOP : std_logic_vector(31 downto 0) := (others => '1');
 	-- Lab 1 code
-	--constant add_inst_1 : std_logic_vector(31 downto 0) := "00000000001000000000100000100000";
-	--constant add_inst_2 : std_logic_vector(31 downto 0) := "00000000010000010001000000100000";
-	--constant add_inst_3 : std_logic_vector(31 downto 0) := "00000000011000100001100000100000";
-	--constant add_inst_4 : std_logic_vector(31 downto 0) := "00000000100000110010000000100000";
-	--constant add_inst_5 : std_logic_vector(31 downto 0) := "00000000101001000010100000100000";
-	
-	-- Lab 2 code
 	constant add_inst_1 : std_logic_vector(31 downto 0) := "00000000001000000000100000100000";
-	constant add_inst_2 : std_logic_vector(31 downto 0) := "00000000010000010001000000100010";
-	constant add_inst_3 : std_logic_vector(31 downto 0) := "00000000011000010001100000100010";
+	constant add_inst_2 : std_logic_vector(31 downto 0) := "00000000010000010001000000100000";
+	constant add_inst_3 : std_logic_vector(31 downto 0) := "00000000011000100001100000100000";
 	constant add_inst_4 : std_logic_vector(31 downto 0) := "00000000100000110010000000100000";
-	constant add_inst_5 : std_logic_vector(31 downto 0) := "00000000101001000010100000100010";
+	constant add_inst_5 : std_logic_vector(31 downto 0) := "00000000101001000010100000100000";
+	
+	-- Lab 3 code
+	--constant add_inst_1 : std_logic_vector(31 downto 0) := "00000000001000000000100000100000";
+	--constant add_inst_2 : std_logic_vector(31 downto 0) := "00000000010000010001000000100010";
+	--constant add_inst_3 : std_logic_vector(31 downto 0) := "00000000011000010001100000100010";
+	--constant add_inst_4 : std_logic_vector(31 downto 0) := "00000000100000110010000000100000";
+	--constant add_inst_5 : std_logic_vector(31 downto 0) := "00000000101001000010100000100010";
 	
 	
 	constant im0 : std_logic_vector(31 downto 0) := NOP;

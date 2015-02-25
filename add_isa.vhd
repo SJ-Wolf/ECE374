@@ -5,7 +5,7 @@ use work.components.all;
 entity add_isa is
 	port( clock, reset, user_reg_enable : in std_logic;
 	user_reg_loc, user_reg_value : in std_logic_vector(3 downto 0);
-	result : out std_logic_vector(3 downto 0));
+	result, counter : out std_logic_vector(3 downto 0));
 end add_isa;
 
 architecture behaviour of add_isa is
@@ -15,6 +15,7 @@ architecture behaviour of add_isa is
 	signal m_read, m_write, reg_write, add_sub : std_logic;
 	
 begin
+	counter <= update_pc;
 	m1 : mux2to1 generic map (n=>4) port map (reset, update_pc, initial_pc, mout);					--- multiplexer
 	r1	: regN generic map (n=>4) port map (clock, mout, rout);												--- register
 	
